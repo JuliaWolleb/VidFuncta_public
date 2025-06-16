@@ -6,8 +6,7 @@ from data import dataset_echonet
 from common.args import parse_args
 from common.utils import set_random_seed, Logger, InfiniteSampler
 from data.dataset import get_dataset
-from models.inrs import LatentModulatedSIREN, LatentModulatedSIREN_v2, LatentModulatedSIREN_v3, LatentModulatedSIREN_v4, LatentModulatedSIREN_v5
-from models.wire import INR
+from models.inrs import LatentModulatedSIREN,  LatentModulatedSIREN_v3
 from models.model_wrapper import ModelWrapper
 from train.trainer import trainer
 from train.maml_boot import train_step

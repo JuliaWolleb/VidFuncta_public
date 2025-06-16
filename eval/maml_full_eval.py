@@ -258,7 +258,7 @@ def test_model_autoregressive(args, model_wrapper, test_loader, logger=None):
         print('data3d', data.shape, pred.shape)
 
         batch_size = data.shape[0]
-        plot = True
+        plot = False
         with torch.no_grad():
            
             if  pred.isnan().any():
@@ -269,25 +269,10 @@ def test_model_autoregressive(args, model_wrapper, test_loader, logger=None):
                     print('data', data.shape)
                     to_pil = transforms.ToPILImage()
                     image = to_pil(data[1*k,...].squeeze())
-                    image.save(f"./imgs_buv/{n}_inputood.png")
+                    image.save(f"./imgs/{n}_input.png")
                     image = to_pil(pred[1*k,...].squeeze())
-                    image.save(f"./imgs_buv/{n}_reconood.png")
-            # elif label == 1 and plot == True:
-            #         print('data', data.shape)
-            #         to_pil = transforms.ToPILImage()
-            #         image = to_pil(data[-1,...].squeeze())
-            #         image.save(f"./imgs_add/{n}_input1.png")
-            #         image = to_pil(pred[-1,...].squeeze())
-            #         image.save(f"./imgs_add/{n}_recon1.png")
-            # elif label == 2 and plot == True:
-            #         print('data', data.shape)
-            #         to_pil = transforms.ToPILImage()
-            #         image = to_pil(data[-1,...].squeeze())
-            #         image.save(f"./imgs_add/{n}_input2.png")
-            #         image = to_pil(pred[-1,...].squeeze())
-            #         image.save(f"./imgs_add/{n}_recon2.png")
-                  
-              
+                    image.save(f"./imgs/{n}_recon.png")
+
         pred = pred.to(device)
         data = data.to(device)
         
@@ -308,7 +293,6 @@ def test_model_autoregressive(args, model_wrapper, test_loader, logger=None):
                 F.mse_loss(data.view(batch_size, -1), pred.reshape(batch_size, -1), reduce=False).mean(dim=1)
             ).mean()
             ssim_results = ssim3D(pred, data).mean()
-            # ssim3D(pred.permute(1,0,2,3)[None,...], data.permute(1,0,2,3)[None,...])
             lpips_results = torch.zeros_like(psnr_results)
 
         elif args.data_type == 'timeseries':
@@ -371,9 +355,6 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
         print('name', name)
         fps=int(fps)
         print('data', data.shape, 'label', label)
-      #  if  label.shape == (1, 0):
-         #   print('got empty label')
-         #   continue
 
         if args.dimension == 'swap':
             print('data swap', data.shape)
@@ -388,7 +369,7 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
             batch_size = data.size(0)
             time = data.size(1)
         print('time', time, 'batch', batch_size)
-        num_steps =math.floor(time/args.num_frames)  #should be 15
+        num_steps =math.floor(time/args.num_frames)  
         print('num_steps', num_steps)
         if  data.isnan().any():
                         print('got nan')
@@ -396,9 +377,9 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
         pred =torch.zeros(data.shape)
         print('pred', pred.shape)
         print('clip', pred.shape, 'time', time)
-      #  target = torch.zeros(time, args.latent_modulation_dim)
-     #   target = torch.zeros(time, 512)
-        target = torch.zeros(time, 64,4,4)
+        target = torch.zeros(time, args.latent_modulation_dim)
+        if args.mode == 'spatial':
+          target = torch.zeros(time, 64,4,4)
         for k in range(int(num_steps)):
            
             if k ==0:
@@ -409,30 +390,15 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
                 if args.dimension == '3d':
                     chunk = data[:,0:args.num_frames,...][None,...]
                 
-                if args.comment == 'separate2':
-                    Chunk= {
-                        'vid': chunk,
-                        'label': label.float().to(device, non_blocking=True) 
-                            }
-                    loss_in_tt_gradscale = inner_adapt_test_scale_v2(model_wrapper=model_wrapper, data=Chunk, step_size=args.inner_lr,
-                                                      num_steps=args.inner_steps_test, first_order=True,
-                                                      sample_type=args.sample_type, scale_type='grad')
-                    v = model_wrapper.model.vdim.detach().cpu()
-                    print('got v', v.shape)
-       
 
-              
-                elif args.mode == 'concat' or args.mode =='separate':
+                elif  args.mode =='separate':
                     _ = inner_adapt_test_scale_v2(model_wrapper=model_wrapper, data=chunk, step_size=args.inner_lr,
                                         num_steps=args.inner_steps_test, first_order=True,
                                         sample_type=args.sample_type, scale_type='grad')
                     v = model_wrapper.model.vdim.detach().cpu()
                     print('got v', v.shape)
 
-                elif args.mode == 'additive':
-                    _ = inner_adapt_test_scale_v3(model_wrapper=model_wrapper, data=chunk, step_size=args.inner_lr,
-                                        num_steps=args.inner_steps_test, first_order=True,
-                                        sample_type=args.sample_type, scale_type='grad')
+             
                 elif args.mode == 'plain' or args.mode =='spatial':
                     print('got plain')
                     _ = inner_adapt_test_scale(model_wrapper=model_wrapper, data=chunk, step_size=args.inner_lr,
@@ -450,25 +416,18 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
 
             else:
                 model_wrapper.model.reset_modulations()
-             #   model_wrapper.model.reset_vdim()
 
                 chunk = data[k*args.num_frames: (k+1)*args.num_frames ,...]
                 if args.dimension == '3d':
                     chunk = data[:,k*args.num_frames: (k+1)*args.num_frames,...][None,...]
                 
-                if args.comment == 'separate2':
-                    Chunk= {
-                        'vid': chunk,
-                        'label': label.float().to(device, non_blocking=True) 
-                            }
-
+      
                 _ = inner_adapt_test_scale(model_wrapper=model_wrapper, data=chunk, step_size=args.inner_lr,
                                         num_steps=args.inner_steps_test, first_order=True,
                                         sample_type=args.sample_type, scale_type='grad')
                 target[k*args.num_frames: (k+1)*args.num_frames ,...] = model_wrapper.model.modulations.detach().cpu()
 
                 with torch.no_grad():
-                 #   model_wrapper.model.reset_vdim()
                     inter = model_wrapper(x=None, t=label).clamp(0, 1)
                     if args.dimension == '3d':
                         pred[:,k*args.num_frames: (k+1)*args.num_frames,...] = inter
@@ -476,43 +435,23 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
                         
                         pred[k*args.num_frames: (k+1)*args.num_frames ,...] = inter
         
-        # to_pil = transforms.ToPILImage()
-        # model_wrapper.model.reset_modulations()
-        # predv = model_wrapper().clamp(0, 1)
-        # print('predv', predv.shape)
-        # print('data', data.shape, 'pred', pred.shape)
-        # image = to_pil(predv[0])
-        # image.save(f"./imgs_add/predicted_v.png")
-        
-        # mean_frame_org = torch.mean(data, dim=0)
-        # print('meanframe', mean_frame_org.shape)
-        # image = to_pil(mean_frame_org[0])
-        # image.save(f"./imgs_add/mean_frame_org.png")
-        # mean_frame_pred = torch.mean(pred, dim=0)
-        # image = to_pil(mean_frame_pred[0])
-        # image.save(f"./imgs_add/mean_frame_pred.png")
-        print('target', target.shape)
         data = data[:num_steps*args.num_frames, ...]
         pred = pred[:num_steps*args.num_frames, ...]
     
 
         plot = True
-      
         pred = pred.to(device)
         data = data.to(device)
-        print('data3', data.shape, pred.shape)
 
         
         if args.data_type == 'img':
-            print('data', data.shape, pred.shape)
-          #  lpips_results = lpips_score((pred[:,:1,...] * 2 - 1), (data[:,:1,...] * 2 - 1)).mean()
             mse_results = F.mse_loss(data.view(1, -1), pred.reshape(1, -1), reduce=False).mean()
             psnr_results = psnr(
                 F.mse_loss(data.view(1, -1), pred.reshape(1, -1), reduce=False).mean(dim=1)
             ).mean()
             ssim_results = ssim(pred, data, ).mean()
             ssim_3d = ssim3D(pred.permute(1,0,2,3)[None,...], data.permute(1,0,2,3)[None,...])
-            print('ssim', ssim_results, 'ssim3d', ssim_3d)
+            print('psnr', psnr_results, 'ssim3d', ssim_3d)
 
         elif args.data_type == 'img3d':
             print('data', data.shape, 'pred', pred.shape)
@@ -522,7 +461,6 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
             ).mean()
             print('pred', pred.shape, 'data', data.shape)
             ssim_3d = ssim3D(pred[None,...], data[None,...]).mean()
-           # lpips_results = torch.zeros_like(psnr_results)
 
         elif args.data_type == 'timeseries':
             mse_results = F.mse_loss(data.view(batch_size, -1), pred.reshape(batch_size, -1), reduce=False).mean()
@@ -530,15 +468,12 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
                 F.mse_loss(data.view(batch_size, -1), pred.reshape(batch_size, -1), reduce=False).mean(dim=1)
             ).mean()
             ssim_results = torch.zeros_like(psnr_results)
-       #     lpips_results = torch.zeros_like(psnr_results)
 
         else:
             raise NotImplementedError()
 
-      #  metric_logger.meters['lpips'].update(lpips_results.item(), n=batch_size)
         metric_logger.meters['psnr'].update(psnr_results.item(), n=batch_size)
         metric_logger.meters['mse'].update(mse_results.item(), n=batch_size)
-       # metric_logger.meters['ssim'].update(ssim_results.item(), n=batch_size)
         metric_logger.meters['ssim3d'].update(ssim_3d.item(), n=batch_size)
         if args.v_dim >0:
             v= v.detach().cpu()
@@ -552,7 +487,6 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
                 'name': name,
                 'psnr': psnr_results.item(),
                 'ssim3d': ssim_3d.item(),
-              #  'lpips':lpips_results.item()
             }
         print('name', name)
         filename = name[0].split('/')[-1].split('.')[0]
@@ -567,9 +501,6 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
         metric_logger.synchronize_between_processes()
         print('label', label)
 
-       # log_(f'*[EVAL {n}][PSNR %.6f][LPIPS %.6f][SSIM %.6f][SSIM3D %.6f][MSE %.6f]' %
-        #         (metric_logger.psnr.global_avg, metric_logger.lpips.global_avg,
-        #          metric_logger.ssim.global_avg, metric_logger.ssim3d.global_avg, metric_logger.mse.global_avg))
         log_(f'*[EVAL {n}][PSNR %.6f][SSIM3D %.6f][MSE %.6f]' %
                  (metric_logger.psnr.global_avg, 
                    metric_logger.ssim3d.global_avg, metric_logger.mse.global_avg))
@@ -580,23 +511,18 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
             tensor = pred.cpu()
             print('tensor', tensor.shape)
             outputdir = args.save_dir +'/videos'
-            #outputname = '.'+label[0].split('.')[1] + '_reconstruct.avi'
             outputname = name[0].split('/')[-1]
             print('outputname', outputname)
             outputname = outputname.split('.')[0]+'.avi'
             print('outputname2', outputname)
             savepath= os.path.join(outputdir,outputname)
             print('savepath', savepath)
-            # Normalize tensor to [0, 255] and convert to uint8
             tensor = (tensor - tensor.min()) / (tensor.max() - tensor.min())  # Normalize to [0,1]
             tensor = (tensor * 255).byte()  # Convert to [0,255] uint8
             if args.dimension == '3d':
                 tensor = tensor.squeeze(0)
             # Convert to numpy and reshape to (H, W) grayscale frames
             frames = tensor.squeeze(1).numpy()  # Shape: (60, 112, 112)
-
-            print('frames', frames.shape)
-
 
 
             # Initialize video writer
@@ -620,9 +546,6 @@ def reconstruct_model_autoregressive(args, model_wrapper, test_loader, logger=No
 
     # gather the stats from all processes
     metric_logger.synchronize_between_processes()
- #   log_(f'*[EVAL Final][PSNR %.8f][LPIPS %.8f][SSIM %.8f][SSIM3d %.8f][MSE %.8f]' %
-    #     (metric_logger.psnr.global_avg, metric_logger.lpips.global_avg,
-     #     metric_logger.ssim.global_avg, metric_logger.ssim3d.global_avg,  metric_logger.mse.global_avg))
     log_(f'*[EVAL Final][PSNR %.8f][SSIM3d %.8f][MSE %.8f]' %
          (metric_logger.psnr.global_avg, 
          metric_logger.ssim3d.global_avg,  metric_logger.mse.global_avg))

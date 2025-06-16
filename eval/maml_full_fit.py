@@ -20,8 +20,6 @@ def fit_nfs(args, model_wrapper, dataloader, double = False, set=None):
             if args.dimension == 'swap':
                 data = torch.permute(data, (1, 0, 2, 3))
 
-     #   if n < 3500:
-     #       continue
      
         try:
             data = data.float().to(device)
@@ -59,7 +57,6 @@ def fit_nfs(args, model_wrapper, dataloader, double = False, set=None):
 
        
         m=model_wrapper.model.modulations.detach().cpu()
-          #  v = model_wrapper.model.vdim.detach().cpu()
             
         target=m  
        

@@ -43,12 +43,4 @@
   'latent_modulation_dim': 512,
   'v_dim': 2048,
 
-# 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250531_autoregressive_modelsiren2_numlayers10_optionmixed_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentonlyheartandlungmixed/best.model,
- #'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250522_autoregressive_modelsiren2_numlayers10_optionbuv_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentseparatebuv/best.model,
- # 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250514_autoregressive_modelsiren2_numlayers10_optionmixed_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize512_vdim2048_frames4_numlayers10_commentseparatemixed/best.model,
- 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250603_autoregressive_modelsiren2_numlayers10_optionbuv_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentfinetune10buv/best.model,
-
-
-  # Save NFs to
- # 'save_dir': ./nfsets/ood_buv_2048
 }

@@ -18,7 +18,7 @@
   'in_size': 2, 
   'out_size' :  1,
   'dimension': swap,
-  'comment' : spatial, #additive_6_subsequent,
+  'comment' : spatial, 
   'mode': spatial,
   'model': siren2,
   'finetune': False,
@@ -30,20 +30,20 @@
   'shape': 4464,
 
 
-
   # Test configuration
   'test_batch_size': 1,
   'num_test_signals': 100,
-  'inner_steps_test': 10,
+  'inner_steps_test': 20,
 
   # Model config
   'hidden_size': 256,
-  'num_layers': 10,  #10
-  'latent_modulation_dim': 64,  #4096
-  'v_dim': 0, #4096
+  'num_layers': 10,  
+  'latent_modulation_dim': 64,  
+  'v_dim': 0, 
 
  
- 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250609_framewise_echo_modelsiren2_numlayers10_optionecho_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize4464_gamma0.2_hiddensize256_vdim0_frames6_numlayers10_commentspatialecho_spatial/best.model,
+ 'load_path': ./logs/path_to_best.model, 
+
  # Save NFs to
  'save_dir': ./reconstructions/echo_spatial_4464/
 }

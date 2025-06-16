@@ -42,9 +42,5 @@
   'latent_modulation_dim': 64,
   'v_dim': 0,
 
-# 'load_path':/gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250527_autoregressive_modelsiren2_numlayers10_optionbuv_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames4_numlayers10_commentincrement20iwtihoutskipbuv/best.model,
-  # Save NFs to
- # 'save_dir': ./nfsets/ood_buv_2048
-   'save_dir': ./nfsets/buv_spatial
 
 }

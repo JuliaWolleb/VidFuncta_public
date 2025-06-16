@@ -11,7 +11,7 @@
   'w0': 10.,
   'w0_increment': 5.,
   'option': bedlus,
-  'num_frames': 10,   #number of frames per batch
+  'num_frames': 10,   
   'selection': False,
   'clip': all,
   'dimension': 3d,
@@ -37,12 +37,12 @@
 
   # Model config
   'hidden_size': 256,
-  'num_layers': 10,  #10
-  'latent_modulation_dim': 8192,  #4096
-  'v_dim': 0, #4096
+  'num_layers': 10, 
+  'latent_modulation_dim': 8192, 
+  'v_dim': 0, 
 
- #'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250607_autoregressive_modelsiren_numlayers10_optionblue_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize8192_gamma0.1_hiddensize256_vdim0_frames10_numlayers10_commentlus3dlus_3d/best.model,
- 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250607_autoregressive_modelsiren_numlayers10_optionbedlus_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize8192_gamma0.1_hiddensize256_vdim0_frames10_numlayers10_commentlus3dlus_3d/best.model,
+ 'load_path': ./logs/path_to_best.model, 
+
   # Save NFs to
-  'save_dir': ./reconstructions/lus_bedlus_3d/
+  'save_dir': ./reconstructions/lung_3d/
 }

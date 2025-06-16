@@ -48,9 +48,6 @@ def main(args):
         val_loader = torch.utils.data.DataLoader(dataset_echonet.Echo(split="val", period=1, length=120 ), batch_size=args.test_batch_size)
 
     else:
-    #  test_set = get_dataset(args, only_test=False)
-   #   test_loader = DataLoader(test_set, batch_size=args.test_batch_size, shuffle=False, num_workers=4, pin_memory=True,
-               #              drop_last=True)
 
         train, val, test = get_dataset(args, all=True, double =False)
         train_loader = DataLoader(train, batch_size=args.test_batch_size, shuffle=False, num_workers=4, pin_memory=True,
@@ -85,35 +82,6 @@ def main(args):
         model.vdim = torch.zeros(size=[1, 64, 4, 4], requires_grad=True).to(device)
 
         print('modulations init', model.modulations.shape, model.vdim.shape)
-
-    elif args.model == 'siren3':
-        print('got siren v5')
-        model = LatentModulatedSIREN_v5(
-                in_size=args.in_size,
-                out_size=args.out_size,
-                hidden_size=args.hidden_size,
-                num_layers=args.num_layers,
-                latent_modulation_dim=args.latent_modulation_dim,
-                v_dim = args.v_dim,
-                s_dim = args.s_dim,
-                w0=args.w0,
-                w0_increments=args.w0_increment,
-                modulate_shift=args.modulate_shift,
-                modulate_scale=args.modulate_scale,
-                enable_skip_connections=args.enable_skip_connections,
-                mode=args.mode,
-                num_frames=args.num_frames,
-                guidance = args.guidance
-            ).to(device)
-        if args.v_dim ==0:
-                model.vdim = 0
-        else:
-                model.vdim = torch.zeros(size=[1, args.v_dim], requires_grad=True).to(device)
-        if args.s_dim ==0:
-                model.sdim = 0
-        else:
-                model.sdim = torch.zeros(size=[1, args.s_dim], requires_grad=True).to(device)
-        model.modulations = torch.zeros(size=[args.num_frames, args.latent_modulation_dim], requires_grad=True).to(device)
     
     elif args.v_dim==0:
         model = LatentModulatedSIREN(
@@ -163,27 +131,7 @@ def main(args):
 
 
     else:
-        model = LatentModulatedSIREN_v2(
-            in_size=args.in_size,
-            out_size=args.out_size,
-            hidden_size=args.hidden_size,
-            num_layers=args.num_layers,
-            latent_modulation_dim=args.latent_modulation_dim,
-            v_dim = args.v_dim,
-            w0=args.w0,
-            w0_increments=args.w0_increment,
-            modulate_shift=args.modulate_shift,
-            modulate_scale=args.modulate_scale,
-            enable_skip_connections=args.enable_skip_connections,
-            mode = args.mode,
-        ).to(device)
-        if args.v_dim ==0:
-            model.vdim = 0
-        else:
-            model.vdim = torch.zeros(size=[1, args.v_dim], requires_grad=True).to(device)
-        model.modulations = torch.zeros(size=[args.num_frames, args.latent_modulation_dim], requires_grad=True).to(device)
-
-    
+        print('no architecture defined')
     
     model = ModelWrapper(args, model)
     load_model(args, model)

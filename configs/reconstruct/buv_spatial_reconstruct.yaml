@@ -18,7 +18,7 @@
   'in_size': 2, 
   'out_size' :  1,
   'dimension': swap,
-  'comment' : spatial, #additive_6_subsequent,
+  'comment' : spatial, 
   'mode': spatial,
   'model': siren2,
   'finetune': False,
@@ -46,7 +46,8 @@
   'v_dim': 0, #4096
 
  
- 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250609_autoregressive_modelsiren2_numlayers10_optionbuv_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize4464_gamma0.2_hiddensize256_vdim0_frames6_numlayers10_commentspatialbuv_spatial/best.model,
+ 'load_path': ./logs/path_to_best.model, 
+ 
  # Save NFs to
  'save_dir': ./reconstructions/buv_spatial_4464/
 }
