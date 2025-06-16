@@ -1,0 +1,54 @@
+
+{
+  # Training cofiguration
+  'dataset': autoregressive,
+  'img_size': 112,
+  'batch_size': 1,
+  'inner_steps': 10,
+  'inner_steps_boot': 0,
+  'data_ratio': 0.2,
+  'sample_type': random,
+  'lam': 0.0,
+  'w0': 10.,
+  'w0_increment': 5.,
+  'option': buv,  #used to be blue
+  'num_frames': 6,   #number of frames per batch
+  'clip': all,
+  'comment': 'buv',
+  'dimension': swap,
+  'comment' : finetune10,
+  'inner_lr': 0.1, 
+  'model': siren2,
+  'selection': True,
+  'finetune': False,
+  'mode': separate,
+  'sobel': False,
+  'guidance': False,
+  'adversarial': False,
+  'enable_skip_connections': True,
+  'in_size':2,
+   'out_size': 1,
+   'data_type':img,
+   'enable_skip_connection': True,
+
+
+  # Test configuration
+  'test_batch_size': 1,
+  'num_test_signals': 100,
+  'inner_steps_test': 20,
+
+  # Model config
+  'hidden_size': 256,
+  'num_layers': 10,
+  'latent_modulation_dim': 512,
+  'v_dim': 2048,
+
+# 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250531_autoregressive_modelsiren2_numlayers10_optionmixed_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentonlyheartandlungmixed/best.model,
+ #'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250522_autoregressive_modelsiren2_numlayers10_optionbuv_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentseparatebuv/best.model,
+ # 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250514_autoregressive_modelsiren2_numlayers10_optionmixed_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize512_vdim2048_frames4_numlayers10_commentseparatemixed/best.model,
+ 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250603_autoregressive_modelsiren2_numlayers10_optionbuv_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentfinetune10buv/best.model,
+
+
+  # Save NFs to
+ # 'save_dir': ./nfsets/ood_buv_2048
+}

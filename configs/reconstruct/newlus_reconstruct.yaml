@@ -1,0 +1,54 @@
+{
+  # Training cofiguration
+  'dataset': autoregressive,
+  'img_size': 112,
+  'batch_size': 1,
+  'inner_steps': 10,
+  'inner_steps_boot': 0,
+  'data_ratio': 0.2,
+  'sample_type': random,
+  'lam': 0.0,
+  'w0': 10.,
+  'w0_increment': 5.,
+  'option': bedlus,
+  'num_frames': 4,   #number of frames per batch
+  'selection': False,
+  'clip': all,
+  'dimension': swap,
+  'model': siren2,
+  'comment' : separate,
+  'finetune': False,
+  'sobel': False,
+  'inner_lr': 0.1, 
+  'guidance': False,
+  'mode': separate,
+   'in_size':2,
+   'out_size': 1,
+   'data_type':img,
+
+
+  # Test configuration
+  'test_batch_size': 1,
+  'num_test_signals': 100,
+  'inner_steps_test': 20,
+
+  # Model config
+  'hidden_size': 512,
+  'num_layers': 10,  #10
+  'latent_modulation_dim': 512,  #4096
+  'v_dim': 2048, #4096s
+
+ #'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250422_framewise_echo_bs1_inner10_size112_latentsize2048_gamma0.1_hiddensize256_vdim2048_clipall_numlayers15_commentadditive_10_subsequentecho_framewise/step10000.model,
+#'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250511_autoregressive_modelsiren2_numlayers10_optionblue_inner10_size112_innerlr0.1_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentseparatenewlus/best.model,
+#'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250508_framewise_echo_modelsiren2_numlayers10_optionecho_inner10_size112_innerlr0.1_latentsize512_gamma0.2_hiddensize256_vdim2048_frames4_numlayers10_commentseparateecho_framewise/best.model, #separate
+#'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250521_autoregressive_modelsiren_numlayers10_optionblue_guidanceFalse_lam0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim0_frames6_numlayers10_commentplainnewlus/best.model,
+#'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250530_autoregressive_modelsiren2_numlayers10_optionmixed_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentonlyheartandbreastmixed/best.model,
+# 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250603_autoregressive_modelsiren2_numlayers10_optionblue_guidanceFalse_lam0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentfinetune10newlus/best.model,
+ #'load_path':  /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250605_autoregressive_modelsiren_numlayers10_optionbedlus_guidanceFalse_lam0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim0_frames6_numlayers10_commentplainnewlus/best.model,
+ # 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250605_autoregressive_modelsiren2_numlayers10_optionbedlus_guidanceFalse_lam0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentseparatenewlus/best.model,
+'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250613_autoregressive_modelsiren2_numlayers10_optionbedlus_guidanceFalse_lam0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize512_vdim2048_frames4_numlayers10_commentseparatenewlus/best.model,
+  
+  
+  # Save NFs to
+  'save_dir': ./reconstructions/bedlus_mixed/
+}

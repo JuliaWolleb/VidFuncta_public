@@ -1,0 +1,48 @@
+{
+  # Training cofiguration
+  'dataset': autoregressive,
+  'img_size': 112,
+  'batch_size': 1,
+  'data_type': img3d,
+  'inner_steps': 10,
+  'inner_steps_boot': 0,
+  'data_ratio': 0.1,
+  'sample_type': random,
+  'lam': 0.0,
+  'w0': 10.,
+  'w0_increment': 5.,
+  'option': bedlus,
+  'num_frames': 10,
+  'clip': all,
+  'in_size': 3, 
+  'out_size' :  1,
+  'dimension': 3d,
+  'comment' : lus3d,
+  'inner_lr': 0.1, 
+  'mode': plain,
+  'model': siren,
+  'finetune': False,
+  'selection': True,
+  'sobel': False,
+  'guidance': False,
+  'adversarial': False,
+
+
+
+  # Test configuration
+  'test_batch_size': 1,
+  'num_test_signals': 100,
+  'inner_steps_test': 20,
+
+  # Model config
+  'hidden_size': 256,
+  'num_layers': 10,
+  'latent_modulation_dim': 8192,  #4096
+  'v_dim': 0, #4096
+
+  #'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250422_framewise_echo_numlayers10_inner10_size112_innerlr0.01_latentsize2048_gamma0.1_hiddensize256_vdim2048_clipall_numlayers10_commentadditive_subsequentecho_framewise/step20000.model,
+
+
+  # Save NFs to
+  'save_dir': ./nfsets/bedlus_3d_8192
+}

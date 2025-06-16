@@ -1,0 +1,48 @@
+{
+  # Training cofiguration
+  'dataset': autoregressive,
+  'img_size': 112,
+  'batch_size': 1,
+  'inner_steps': 10,
+  'inner_steps_boot': 0,
+  'data_ratio': 0.25,
+  'sample_type': random,
+  'lam': 0.0,
+  'w0': 10.,
+  'w0_increment': 5.,
+  'option': mixed,
+  'num_frames': 4,   #number of frames per batch
+  'selection': False,
+  'clip': all,
+  'dimension': swap,
+  'comment' :separate,
+  'inner_lr': 0.1, 
+  'mode': separate,
+  'sobel': False,
+  'guidance': False,
+  'model': siren2,
+  'finetune': False,
+  'selection': False,
+  'guidance': False,
+
+
+  # Test configuration
+  'test_batch_size': 1,
+  'num_test_signals': 100,
+  'inner_steps_test': 20,
+
+  # Model config
+  'hidden_size': 256,  #used to be 512
+  'num_layers': 10,  #used to be 15
+  'latent_modulation_dim':  512,  #used to be 2048sß
+  'v_dim': 2048,
+ # 's_dim': 2048,
+
+ # 'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250525_autoregressive_modelsiren3_numlayers10_optionmixed_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize256_vdim2048_frames6_numlayers10_commentseparate2mixed/step70000.model,
+  'load_path': /gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta/logs/250514_autoregressive_modelsiren2_numlayers10_optionmixed_guidanceFalse_lam0.0_inner10_size112_innerlr0.1_meatlr3e-06_latentsize512_gamma0.2_hiddensize512_vdim2048_frames4_numlayers10_commentseparatemixed/best.model,
+
+  
+  
+  # Save NFs to
+  'save_dir':   ./reconstructions/mixed_separate_512_newtry/
+}

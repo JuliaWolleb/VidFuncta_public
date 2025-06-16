@@ -1,0 +1,43 @@
+{
+  # Training cofiguration
+  'dataset': framewise_echo,
+  'img_size': 112,
+  'batch_size': 1,
+  'inner_steps': 10,
+  'inner_steps_boot': 0,
+  'data_ratio': 0.2,
+  'sample_type': random,
+  'lam': 0.0,
+  'w0': 10.,
+  'w0_increment': 5.,
+  'option': echo,
+  'num_frames': 6,
+  'clip': all,
+  'in_size': 2, 
+  'out_size' :  1,
+  'data_type': img,
+  'dimension': swap,
+  'comment' : spatial,
+  'inner_lr': 0.1, 
+  'mode': spatial,
+  'model': siren,
+  'finetune': False,
+  'selection': True,
+  'sobel': False,
+  'guidance': False,
+  'shape': 4464,
+  'adversarial': False,
+
+
+  # Test configuration
+  'test_batch_size': 1,
+  'num_test_signals': 100,
+  'inner_steps_test': 10,
+
+  # Model config
+  'hidden_size': 256,
+  'num_layers': 10,
+  'latent_modulation_dim': 64,  
+  'v_dim': 0, 
+
+}
