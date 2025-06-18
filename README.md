@@ -51,7 +51,7 @@ The first row shows the model input, the second rew the reconstructed videos usi
   </tr>
 </table>
 
-![Modulation vectors $\phi$ for 6 samples of the cardiac dataset](/gpfs/gibbs/project/hartley/jw3234/medfuncta/vidfuncta_public/videos/images/batch_grid_echo(3).png)
+![Modulation vectors $\phi$ for 2 samples of the cardiac dataset](./videos/images/modulations_echo.png)
 
 
 ## Comparing Methods
@@ -59,7 +59,7 @@ The first row shows the model input, the second rew the reconstructed videos usi
 We adapted the code repository available  [here](https://github.com/jannisborn/covid19_ultrasound), using the video classification approach.
 
 ### Res2+1D
-The Res2+1D architecture was adopted from ...
+The Res2+1D architecture was adopted from the [torchvision video model implementation](https://docs.pytorch.org/vision/main/models/generated/torchvision.models.video.r2plus1d_18.html).
 
 ### MedFuncta
 This Github repository was based on MedFuncta available [here](https://github.com/pfriedri/medfuncta).
