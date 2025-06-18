@@ -50,7 +50,7 @@ The first row shows the model input, the second rew the reconstructed videos usi
     <td><img src="./videos/output/1116637041_00120730.gif" width="150"/></td>
   </tr>
 </table>
-
+We plot the modulation vectore of length 512 over time for two cardiac videos.
 ![Modulation vectors $\phi$ for 2 samples of the cardiac dataset](./videos/images/modulations_echo.png)
 
 
