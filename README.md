@@ -19,15 +19,20 @@ Training configurations are stored in the folder *configs/experiments*
 - To run the training of the 3D approach, `python3 train.py --config ./configs/experiments/3d_imgs/lung_3d.yaml` .
 - To run the training of the spatial approach, `python3 train_spatial.py --config ./configs/experiments/2d_imgs/lung_spatial.yaml` .
 
-The trained models will be stored in a folder *logs*.
+The trained models will be stored in a folder *logs*. If you want to train on heart or breast, just replace *lung* with the desired term.
 
 
 ### Inference and saving of the modulation vectors
 
-- To store the modulations and reconstruct the videos, run
+To store the modulations and reconstruct the videos, run
 `python3 rescontruct.py --config ./configs/reconstruct/lung_reconstruct.yaml`
 
  The output will be stored in a folder *reconstructions*.
+
+
+### Downstream tasks
+To run the downstream task on the saved modulation vectors, run
+`python3 downstream_tasks/classification_lung.py`
 
 
 ## Detailed Results
@@ -55,6 +60,8 @@ We plot the modulation vectore of length 512 over time for two cardiac videos.
 
 ![Modulation vectors $\phi$ for 2 samples of the cardiac dataset](./videos/images/modulations_echo.png)
 
+We report the mean and standard deviation of the downstream performance across 5 folds:
+![downstream](./videos/images/downstream_results.png)
 
 ## Comparing Methods
 ### PocovidNet
