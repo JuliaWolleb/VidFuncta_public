@@ -1,6 +1,6 @@
-# VidFuncta_public
+# VidFuncta
 
-This repo contains the official Pytorch implementation of the paper *VidFuncta*.
+This repo contains the official Pytorch implementation of the paper *VidFuncta: Towards Generalizable Neural Representations for Ultrasound Videos*. The paper can be found [here](https://www.arxiv.org/abs/2507.21863).
  
 
 ## Data
@@ -14,12 +14,12 @@ A mini-example how the data needs to be stored can be found in the folder *data*
 
 
 ### Training of the Meta-Model
-Training configurations are stored in the folder *configs/experiments*
-- To run the training of the our VidFuncta approach, `python3 train.py --config ./configs/experiments/2d_imgs/lung.yaml` .
-- To run the training of the 3D approach, `python3 train.py --config ./configs/experiments/3d_imgs/lung_3d.yaml` .
-- To run the training of the spatial approach, `python3 train_spatial.py --config ./configs/experiments/2d_imgs/lung_spatial.yaml` .
+Training configurations are stored in the folder *configs/experiments*.
+- For the training of the our VidFuncta approach on the lung dataset, run `python3 train.py --config ./configs/experiments/2d_imgs/lung.yaml` .
+- For the training of the 3D approach, run `python3 train.py --config ./configs/experiments/3d_imgs/lung_3d.yaml` .
+- For the training of the spatial approach, run `python3 train_spatial.py --config ./configs/experiments/2d_imgs/lung_spatial.yaml` .
 
-The trained models will be stored in a folder *logs*.
+The trained models will be stored in a folder *logs*. You can replace "lung" by "cardiac" or "breast" if you want to train on the other datasets.
 
 
 ### Inference and saving of the modulation vectors
@@ -27,11 +27,11 @@ The trained models will be stored in a folder *logs*.
 - To store the modulations and reconstruct the videos, run
 `python3 rescontruct.py --config ./configs/reconstruct/lung_reconstruct.yaml`
 
- The output will be stored in a folder *reconstructions*.
+ In the yaml file, you need to adapt the path to the right model in the *logs* folder. The output will be stored in a folder called *reconstructions*.
 
 
 ## Detailed Results
-The first row shows the model input, the second rew the reconstructed videos using a model trained on the mixed dataset.
+The first row shows the model input, the second rew the reconstructed videos using a model trained on the mixed dataset. Below, we show visualizations of the modulation vectors of two cardiac datasets. The time dimension is shown in the y-axis, while the x-axis shows the length of the modulation vectors.
 <table>
   <tr>
     <td><img src="./videos/original/0X10A28877E97DF540.gif" width="150"/></td>
